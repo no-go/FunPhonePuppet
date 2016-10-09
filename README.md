@@ -18,7 +18,7 @@ nicht da sind, von der App unter `Documents/click.dummer.funphonepuppet/` automa
 angelegt. Du kannst die Bilder ändern! Der Bildpunkt oben rechts in *blinky.jpg* wird
 als Hintergrundfarbe der App genommen.
 
-Video: [action.mp4](https://github.com/no-go/FunPhonePuppet/blob/master/action.mp4?raw=true)
+Video: [action.m4v](https://github.com/no-go/FunPhonePuppet/blob/master/action.m4v?raw=true)
 
 The default 4 images are stored under ...
 
