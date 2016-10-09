@@ -8,6 +8,8 @@ These fullscreen app uses four images to simulate a puppet. If you do not move o
 phone, the screen shows only one image. Randomly a *blinky* image is shown for a short time.
 The other two images will be shown, if you move or shake the phone.
 
+Support me: <a href="https://flattr.com/thing/5195033" target="_blank">![Flattr This](flattr.png)</a>
+
 **Deutsch** : Mit dieser App kannst du durch das Bewegen deines Handys ein Handpuppe
 simulieren. Die App reagiert auf Erschütterung. Ist die Erschütterung stärker,
 wird an Stelle vom Bild *force1.jpg* das Bild *force2.jpg* genommen. Auf diese
@@ -32,3 +34,5 @@ of `blinky.jpg` - Change these files and create new ideas of using these app!
 
 Get a signed APK from here: [FunPhonePuppet.apk](https://github.com/no-go/FunPhonePuppet/blob/master/app/app-release.apk?raw=true)
 or search it on [f-Droid](http://f-droid.org)
+
+
