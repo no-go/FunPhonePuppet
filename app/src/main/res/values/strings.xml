@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Fun Phone Puppet</string>
+    <string name="fileErr">File access error</string>
+</resources>
