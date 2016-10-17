@@ -18,7 +18,9 @@ es nicht langweilig wird, gibt es noch Bild *blinky.jpg* was für das zufällige
 Blinzeln benutzt wird. Die Bilder werden, wenn sie beim Starten der App
 nicht da sind, von der App unter `Documents/click.dummer.funphonepuppet/` automatisch
 angelegt. Du kannst die Bilder ändern! Der Bildpunkt oben rechts in *blinky.jpg* wird
-als Hintergrundfarbe der App genommen.
+als Hintergrundfarbe der App genommen. Die Datei *neehe.mp3* wird bei jeder
+Erschütterung gespielt, wenn man in der App in einer Checkbox einen Haken
+setzt.
 
 Video: [action.m4v](https://github.com/no-go/FunPhonePuppet/blob/master/action.m4v?raw=true)
 
@@ -28,6 +30,7 @@ The default 4 images are stored under ...
   - force1.jpg : a low force (you shake your phone a bit)
   - force2.jpg : a hard force (you shake your phone more intensive)
   - blinky.jpg : this image pops up randomly every 0.5 till 5 sec
+  - neehe.mp3 : if you check a checkbox in the App, this sound is playing on every shake
 
 ... at `Documents/click.dummer.funphonepuppet/` on your phone. The color of the background is the (0,0) upper left pixel
 of `blinky.jpg` - Change these files and create new ideas of using these app!

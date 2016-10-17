@@ -2,17 +2,22 @@ package click.dummer.funphonepuppet;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +25,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,10 +36,14 @@ public class FaceActivity extends Activity implements SensorEventListener {
 
     SensorManager sensorManager;
     Sensor sensor;
-    TextView valueView;
+
+    MediaPlayer mp;
+    CheckBox checkBox;
+
     ImageView imageView;
     ArrayList<Bitmap> bitmaps;
     String[] bitmapNames = {"blinky.jpg", "normal.jpg", "force1.jpg", "force2.jpg"};
+    String mp3Name = "neehe.mp3";
     int[] forces = {0, 20, 30};
 
     Handler mHandler = new Handler();
@@ -59,20 +70,29 @@ public class FaceActivity extends Activity implements SensorEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PACKAGE_NAME = this.getPackageName();
         setContentView(R.layout.face);
-        valueView = (TextView) findViewById(R.id.textView);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
         imageView = (ImageView) findViewById(R.id.imageView);
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        PACKAGE_NAME = this.getPackageName();
 
         String path = makeDir();
         if(path != null) {
             storeDefaultBitmaps(path);
+            storeMp3(path + mp3Name, R.raw.neehe);
             loadBitmaps(path);
             setBackgrounds();
             mHandler.postDelayed(doBlinki, 5000);
+        }
+        Uri uri = Uri.fromFile(new File(path + mp3Name));
+        mp = new MediaPlayer();
+        try {
+            mp.setDataSource(this, uri);
+            mp.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         toggleFullscreen();
     }
@@ -128,6 +148,30 @@ public class FaceActivity extends Activity implements SensorEventListener {
         }
     }
 
+    private void storeMp3(String filename, int res) {
+        InputStream in_s = getResources().openRawResource(res);
+        FileOutputStream out = null;
+        try {
+            File file = new File(filename);
+            if (!file.exists()) {
+                byte[] b = new byte[in_s.available()];
+                in_s.read(b);
+                out = new FileOutputStream(filename);
+                out.write(b);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void loadBitmaps(String path) {
         bitmaps = new ArrayList<>();
         bitmaps.add(BitmapFactory.decodeFile(path + bitmapNames[0]));
@@ -139,7 +183,7 @@ public class FaceActivity extends Activity implements SensorEventListener {
     private void setBackgrounds() {
         int pixel = bitmaps.get(0).getPixel(0,0);
         imageView.setBackgroundColor(pixel);
-        valueView.setBackgroundColor(pixel);
+        checkBox.setBackgroundColor(pixel);
     }
 
     @Override
@@ -158,13 +202,18 @@ public class FaceActivity extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         Float v = Math.abs(sensorEvent.values[0]) + Math.abs(sensorEvent.values[1]) + Math.abs(sensorEvent.values[2]);
         int val = Math.round(v);
-        valueView.setText(Integer.toString(val));
         if (val < forces[1]) {
             imageView.setImageBitmap(bitmaps.get(1));
         } else if (val < forces[2]) {
             imageView.setImageBitmap(bitmaps.get(2));
+            if (checkBox.isChecked() && !mp.isPlaying()) {
+                mp.start();
+            }
         } else {
             imageView.setImageBitmap(bitmaps.get(3));
+            if (checkBox.isChecked() && !mp.isPlaying()) {
+                mp.start();
+            }
         }
     }
 

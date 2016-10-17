@@ -6,13 +6,10 @@
     android:keepScreenOn="true"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="TextView"
+    <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
-        android:id="@+id/textView"
-        android:gravity="center" />
+        android:id="@+id/checkBox" />
 
     <ImageView
         android:layout_width="match_parent"
